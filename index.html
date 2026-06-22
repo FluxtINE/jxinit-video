@@ -20,14 +20,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
 .card .arrow{color:#bbb;font-size:18px;flex-shrink:0}
 .footer{text-align:center;padding:16px;font-size:11px;color:#bbb}
 .refresh-btn{position:fixed;right:20px;bottom:20px;width:48px;height:48px;border-radius:50%;background:#1a73e8;color:#fff;font-size:20px;border:none;box-shadow:0 3px 10px rgba(26,115,232,.4);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:999}
-.refresh-btn:active{transform:scale(.92)}
+.refresh-btn:active{transform:scale(.92);box-shadow:0 1px 4px rgba(26,115,232,.4)}
+@keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
-<div class="header"><h1>RFID智能签到系统 · 快速操作指南</h1><p>杰欣智能科技有限公司</p></div>
+<div class="header"><h1>RFID智能签到系统 · 快速操作指南</h1><p>杰欣智能科技有限公司</p ></div>
 <div class="list" id="list"></div>
 <div class="footer">杰欣智能 · 成立于2014年</div>
-<button class="refresh-btn" onclick="location.replace(location.href.split('?')[0]+'?t='+Date.now())">↻</button>
+<button class="refresh-btn" onclick="var b=this;b.style.animation='spin .6s linear';setTimeout(function(){location.replace(location.href.split('?')[0]+'?t='+Date.now())},500)">↻</button>
 <script>
 var videos=[
   {title:"810型通道机连接教程",url:"mmr7sAjYSdbjFZzpD_UEMg"},
@@ -39,7 +40,7 @@ var videos=[
 var h="";
 for(var i=0;i<videos.length;i++){
   var n=i+1;
-  h+='<a class="card" href="https://mp.weixin.qq.com/s/'+videos[i].url+'"><div class="num">'+n+'</div><div class="info"><div class="title">'+videos[i].title+'</div><div class="desc">公众号图文 · 含视频</div></div><div class="arrow">▶</div></a>';
+  h+='<a class="card" href="https://mp.weixin.qq.com/s/'+videos[i].url+'"><div class="num">'+n+'</div><div class="info"><div class="title">'+videos[i].title+'</div><div class="desc">公众号图文 · 含视频</div></div><div class="arrow">▶</div></a >';
 }
 document.getElementById("list").innerHTML=h;
 </script>
