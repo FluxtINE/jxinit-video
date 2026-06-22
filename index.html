@@ -5,10 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>杰欣智能 · 产品视频</title>
   <style>
-    /* ====== 全局重置 ====== */
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    /* ====== 页面基础样式 ====== */
     body {
       font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
       background: #f5f5f5;
@@ -20,7 +18,6 @@
       touch-action: manipulation;
     }
 
-    /* ====== 顶部标题栏 ====== */
     .header {
       background: linear-gradient(135deg, #1a73e8, #0d47a1);
       color: #fff;
@@ -31,14 +28,12 @@
     .header h1 { font-size: 20px; margin-bottom: 4px; }
     .header p  { font-size: 13px; opacity: 0.85; }
 
-    /* ====== 视频列表容器 ====== */
     .list {
-      padding: 12px 16px 80px;   /* 底部留白，避免被按钮挡住 */
+      padding: 12px 16px 80px;
       max-width: 600px;
       margin: 0 auto;
     }
 
-    /* ====== 视频卡片 ====== */
     .card {
       background: #fff;
       border-radius: 10px;
@@ -86,7 +81,6 @@
       flex-shrink: 0;
     }
 
-    /* ====== 底部版权 ====== */
     .footer {
       text-align: center;
       padding: 16px;
@@ -94,7 +88,6 @@
       color: #bbb;
     }
 
-    /* ====== 右下角刷新按钮 ====== */
     .refresh-btn {
       position: fixed;
       right: 20px;
@@ -112,30 +105,26 @@
       align-items: center;
       justify-content: center;
       z-index: 999;
-      transition: transform 0.2s, box-shadow 0.2s;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-appearance: none;
     }
     .refresh-btn:active {
       transform: scale(0.92);
       box-shadow: 0 1px 4px rgba(26, 115, 232, 0.4);
     }
-    /* 旋转动画 */
-    .refresh-btn.spinning { animation: spin 0.8s linear infinite; }
-    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
   </style>
 </head>
 
 <body>
 
-  <!-- ====== 顶部标题栏 ====== -->
   <div class="header">
     <h1>杰欣智能 · 产品视频演示</h1>
     <p>杰欣智能科技有限公司</p >
   </div>
 
-  <!-- ====== 视频列表 ====== -->
   <div class="list" id="list">
 
-    <!-- 视频① -->
+    <!-- ① -->
     <a class="card" href="https://mp.weixin.qq.com/s/mmr7sAjYSdbjFZzpD_UEMg">
       <div class="num">1</div>
       <div class="info">
@@ -145,7 +134,7 @@
       <div class="arrow">&#9654;</div>
     </a >
 
-    <!-- 视频② -->
+    <!-- ② -->
     <a class="card" href="https://mp.weixin.qq.com/s/rQycHmv09_OYHASusOEY6Q">
       <div class="num">2</div>
       <div class="info">
@@ -155,7 +144,7 @@
       <div class="arrow">&#9654;</div>
     </a >
 
-    <!-- 视频③ -->
+    <!-- ③ -->
     <a class="card" href="https://mp.weixin.qq.com/s/Yt4ZmaWsVKbPok477MT3uA">
       <div class="num">3</div>
       <div class="info">
@@ -165,7 +154,7 @@
       <div class="arrow">&#9654;</div>
     </a >
 
-    <!-- 视频④ -->
+    <!-- ④ -->
     <a class="card" href="https://mp.weixin.qq.com/s/XaG5fgh7gLpAckEqOEYEXg">
       <div class="num">4</div>
       <div class="info">
@@ -175,7 +164,7 @@
       <div class="arrow">&#9654;</div>
     </a >
 
-    <!-- 视频⑤ -->
+    <!-- ⑤ -->
     <a class="card" href="https://mp.weixin.qq.com/s/k6mCh6nXYc0MdEsOYLUE0Q">
       <div class="num">5</div>
       <div class="info">
@@ -187,13 +176,11 @@
 
   </div>
 
-  <!-- ====== 底部版权 ====== -->
   <div class="footer">
     杰欣智能 · 成立于2014年
   </div>
 
-  <!-- ====== 右下角刷新按钮 ====== -->
-  <button class="refresh-btn" id="refreshBtn" title="刷新页面">↻</button>
+  <button class="refresh-btn" onclick="location.replace(location.href.split('?')[0]+'?t='+Date.now())" title="刷新页面">↻</button>
 
-  <script>
-    
+</body>
+</html>
