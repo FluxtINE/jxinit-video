@@ -1,199 +1,47 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>RFID智能签到系统 · 快速操作指南</title>
-  <style>
-    /* ====== 全局重置 ====== */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    /* ====== 页面基础样式 ====== */
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
-      background: #f5f5f5;
-      color: #333;
-      min-height: 100vh;
-      -webkit-touch-callout: none;
-      -webkit-user-select: none;
-      user-select: none;
-      touch-action: manipulation;
-    }
-
-    /* ====== 顶部标题栏 ====== */
-    .header {
-      background: linear-gradient(135deg, #1a73e8, #0d47a1);
-      color: #fff;
-      text-align: center;
-      padding: 24px 16px 18px;
-    }
-
-    .header h1 { font-size: 20px; margin-bottom: 4px; }
-    .header p  { font-size: 13px; opacity: 0.85; }
-
-    /* ====== 视频列表容器 ====== */
-    .list {
-      padding: 12px 16px 80px;   /* 底部留白，避免被按钮挡住 */
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    /* ====== 视频卡片 ====== */
-    .card {
-      background: #fff;
-      border-radius: 10px;
-      padding: 16px;
-      margin-bottom: 12px;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-      display: flex;
-      align-items: center;
-      text-decoration: none;
-      color: #333;
-      transition: box-shadow 0.2s;
-    }
-    .card:active { background: #f0f0f0; }
-
-    .card .num {
-      width: 32px; height: 32px;
-      border-radius: 50%;
-      background: #1a73e8;
-      color: #fff;
-      text-align: center;
-      line-height: 32px;
-      font-size: 14px;
-      font-weight: 700;
-      flex-shrink: 0;
-      margin-right: 12px;
-    }
-
-    .card .info { flex: 1; min-width: 0; }
-    .card .info .title {
-      font-size: 15px;
-      font-weight: 600;
-      margin-bottom: 2px;
-    }
-    .card .info .desc {
-      font-size: 12px;
-      color: #888;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .card .arrow {
-      color: #bbb;
-      font-size: 18px;
-      flex-shrink: 0;
-    }
-
-    /* ====== 底部版权 ====== */
-    .footer {
-      text-align: center;
-      padding: 16px;
-      font-size: 11px;
-      color: #bbb;
-    }
-
-    /* ====== 右下角刷新按钮 ====== */
-    .refresh-btn {
-      position: fixed;
-      right: 20px;
-      bottom: 20px;
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: #1a73e8;
-      color: #fff;
-      font-size: 20px;
-      border: none;
-      box-shadow: 0 3px 10px rgba(26, 115, 232, 0.4);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 999;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .refresh-btn:active {
-      transform: scale(0.92);
-      box-shadow: 0 1px 4px rgba(26, 115, 232, 0.4);
-    }
-    /* 旋转动画 */
-    .refresh-btn.spinning { animation: spin 0.8s linear infinite; }
-    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>RFID智能签到系统 · 快速操作指南</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:#f5f5f5;color:#333;min-height:100vh;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;touch-action:manipulation}
+.header{background:linear-gradient(135deg,#1a73e8,#0d47a1);color:#fff;text-align:center;padding:24px 16px 18px}
+.header h1{font-size:20px;margin-bottom:4px}
+.header p{font-size:13px;opacity:.85}
+.list{padding:12px 16px 80px;max-width:600px;margin:0 auto}
+.card{background:#fff;border-radius:10px;padding:16px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.08);display:flex;align-items:center;text-decoration:none;color:#333}
+.card:active{background:#f0f0f0}
+.card .num{width:32px;height:32px;border-radius:50%;background:#1a73e8;color:#fff;text-align:center;line-height:32px;font-size:14px;font-weight:700;flex-shrink:0;margin-right:12px}
+.card .info{flex:1;min-width:0}
+.card .info .title{font-size:15px;font-weight:600;margin-bottom:2px}
+.card .info .desc{font-size:12px;color:#888;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card .arrow{color:#bbb;font-size:18px;flex-shrink:0}
+.footer{text-align:center;padding:16px;font-size:11px;color:#bbb}
+.refresh-btn{position:fixed;right:20px;bottom:20px;width:48px;height:48px;border-radius:50%;background:#1a73e8;color:#fff;font-size:20px;border:none;box-shadow:0 3px 10px rgba(26,115,232,.4);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:999}
+.refresh-btn:active{transform:scale(.92)}
+</style>
 </head>
-
 <body>
-
-  <!-- ====== 顶部标题栏 ====== -->
-  <div class="header">
-    <h1>RFID智能签到系统 · 快速操作指南</h1>
-    <p>杰欣智能科技有限公司</p>
-  </div>
-
-  <!-- ====== 视频列表 ====== -->
-  <div class="list" id="list">
-
-    <!-- 视频① -->
-    <a class="card" href="https://mp.weixin.qq.com/s/mmr7sAjYSdbjFZzpD_UEMg">
-      <div class="num">1</div>
-      <div class="info">
-        <div class="title">810型通道机连接教程</div>
-        <div class="desc">公众号图文 · 含视频</div>
-      </div>
-      <div class="arrow">&#9654;</div>
-    </a>
-
-    <!-- 视频② -->
-    <a class="card" href="https://mp.weixin.qq.com/s/rQycHmv09_OYHASusOEY6Q">
-      <div class="num">2</div>
-      <div class="info">
-        <div class="title">RFID 无障碍智能签到系统操作教程</div>
-        <div class="desc">公众号图文 · 含视频</div>
-      </div>
-      <div class="arrow">&#9654;</div>
-    </a>
-
-    <!-- 视频③ -->
-    <a class="card" href="https://mp.weixin.qq.com/s/Yt4ZmaWsVKbPok477MT3uA">
-      <div class="num">3</div>
-      <div class="info">
-        <div class="title">人脸识别设置教程</div>
-        <div class="desc">公众号图文 · 含视频</div>
-      </div>
-      <div class="arrow">&#9654;</div>
-    </a>
-
-    <!-- 视频④ -->
-    <a class="card" href="https://mp.weixin.qq.com/s/XaG5fgh7gLpAckEqOEYEXg">
-      <div class="num">4</div>
-      <div class="info">
-        <div class="title">广告机无法连接签到系统设置</div>
-        <div class="desc">公众号图文 · 含视频</div>
-      </div>
-      <div class="arrow">&#9654;</div>
-    </a>
-
-    <!-- 视频⑤ -->
-    <a class="card" href="https://mp.weixin.qq.com/s/k6mCh6nXYc0MdEsOYLUE0Q">
-      <div class="num">5</div>
-      <div class="info">
-        <div class="title">签到系统无法正常启动解决教程</div>
-        <div class="desc">公众号图文 · 含视频</div>
-      </div>
-      <div class="arrow">&#9654;</div>
-    </a>
-
-  </div>
-
-  <!-- ====== 底部版权 ====== -->
-  <div class="footer">
-    杰欣智能 · 成立于2014年
-  </div>
-
-  <!-- ====== 右下角刷新按钮 ====== -->
-  <button class="refresh-btn" onclick="location.replace(location.href.split('?')[0]+'?t='+Date.now())" title="刷新页面">↻</button>
-
+<div class="header"><h1>RFID智能签到系统 · 快速操作指南</h1><p>杰欣智能科技有限公司</p></div>
+<div class="list" id="list"></div>
+<div class="footer">杰欣智能 · 成立于2014年</div>
+<button class="refresh-btn" onclick="location.replace(location.href.split('?')[0]+'?t='+Date.now())">↻</button>
+<script>
+var videos=[
+  {title:"810型通道机连接教程",url:"mmr7sAjYSdbjFZzpD_UEMg"},
+  {title:"RFID 无障碍智能签到系统操作教程",url:"rQycHmv09_OYHASusOEY6Q"},
+  {title:"人脸识别设置教程",url:"Yt4ZmaWsVKbPok477MT3uA"},
+  {title:"广告机无法连接签到系统设置",url:"XaG5fgh7gLpAckEqOEYEXg"},
+  {title:"签到系统无法正常启动解决教程",url:"k6mCh6nXYc0MdEsOYLUE0Q"}
+];
+var h="";
+for(var i=0;i<videos.length;i++){
+  var n=i+1;
+  h+='<a class="card" href="https://mp.weixin.qq.com/s/'+videos[i].url+'"><div class="num">'+n+'</div><div class="info"><div class="title">'+videos[i].title+'</div><div class="desc">公众号图文 · 含视频</div></div><div class="arrow">▶</div></a>';
+}
+document.getElementById("list").innerHTML=h;
+</script>
 </body>
 </html>
