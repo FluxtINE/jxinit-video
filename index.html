@@ -1,85 +1,196 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>杰欣智能 · 产品视频</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
-body{
-  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
-  background:#f5f5f5;color:#333;min-height:100vh;
-  -webkit-touch-callout:none;   /* 禁止长按弹出菜单 */
-  -webkit-user-select:none;     /* 禁止选中文字 */
-  user-select:none;             /* 禁止选中文字 */
-  touch-action:manipulation;    /* 禁止双击缩放，只允许点击和滑动 */
-}
-/* 视频卡片内部允许正常点击，但禁止选择 */
-.card *{-webkit-user-select:none;user-select:none;}
-.header{background:linear-gradient(135deg,#1a73e8,#0d47a1);color:#fff;text-align:center;padding:24px 16px 18px;}
-.header h1{font-size:20px;margin-bottom:4px;}
-.header p{font-size:13px;opacity:.85;}
-.list{padding:12px 16px;max-width:600px;margin:0 auto;}
-.card{background:#fff;border-radius:10px;padding:16px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.08);display:flex;align-items:center;text-decoration:none;color:#333;transition:box-shadow .2s;}
-.card:hover{box-shadow:0 2px 12px rgba(0,0,0,.12);}
-.card .num{width:32px;height:32px;border-radius:50%;background:#1a73e8;color:#fff;text-align:center;line-height:32px;font-size:14px;font-weight:700;flex-shrink:0;margin-right:12px;}
-.card .info{flex:1;min-width:0;}
-.card .info .title{font-size:15px;font-weight:600;margin-bottom:2px;}
-.card .info .desc{font-size:12px;color:#888;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.card .arrow{color:#bbb;font-size:18px;flex-shrink:0;}
-.footer{text-align:center;padding:16px;font-size:11px;color:#bbb;}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>杰欣智能 · 产品视频</title>
+  <style>
+    /* ====== 全局重置 ====== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* ====== 页面基础样式 ====== */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: #f5f5f5;
+      color: #333;
+      min-height: 100vh;
+      -webkit-touch-callout: none;   /* 禁止长按菜单 */
+      -webkit-user-select: none;     /* 禁止选中文字 */
+      user-select: none;
+      touch-action: manipulation;    /* 禁止双击缩放 */
+    }
+
+    /* ====== 顶部标题栏 ====== */
+    .header {
+      background: linear-gradient(135deg, #1a73e8, #0d47a1);
+      color: #fff;
+      text-align: center;
+      padding: 24px 16px 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header h1 { font-size: 20px; margin-bottom: 4px; }
+    .header p  { font-size: 13px; opacity: 0.85; }
+
+    /* 下拉刷新提示条 */
+    .pull-refresh {
+      position: absolute;
+      top: -40px; left: 0; right: 0;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: #fff;
+      opacity: 0.8;
+      transition: top 0.3s;
+    }
+    .pull-refresh.show { top: 0; }
+    .pull-refresh .arrow {
+      display: inline-block;
+      margin-right: 6px;
+      transition: transform 0.3s;
+    }
+    .pull-refresh .arrow.up { transform: rotate(180deg); }
+
+    /* ====== 视频列表容器 ====== */
+    .list {
+      padding: 12px 16px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* ====== 视频卡片 ====== */
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 12px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: #333;
+      transition: box-shadow 0.2s;
+    }
+    .card:active { background: #f0f0f0; }
+
+    /* 圆形序号 */
+    .card .num {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: #1a73e8;
+      color: #fff;
+      text-align: center;
+      line-height: 32px;
+      font-size: 14px;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-right: 12px;
+    }
+
+    /* 标题与描述 */
+    .card .info { flex: 1; min-width: 0; }
+    .card .info .title {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .card .info .desc {
+      font-size: 12px;
+      color: #888;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* 右箭头 */
+    .card .arrow {
+      color: #bbb;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    /* ====== 底部版权 ====== */
+    .footer {
+      text-align: center;
+      padding: 16px;
+      font-size: 11px;
+      color: #bbb;
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="header">
-  <h1>杰欣智能 · 产品视频演示</h1>
-  <p>杰欣智能科技有限公司</p >
-</div>
-
-<div class="list">
-
-  <a class="card" href="https://mp.weixin.qq.com/s/mmr7sAjYSdbjFZzpD_UEMg">
-    <div class="num">1</div>
-    <div class="info">
-      <div class="title">810型通道机连接教程</div>
-      <div class="desc">公众号图文 · 含视频</div>
+  <!-- ====== 顶部标题栏 ====== -->
+  <div class="header" id="header">
+    <div class="pull-refresh" id="pullRefresh">
+      <span class="arrow" id="arrow">↓</span>
+      <span id="refreshText">下拉刷新</span>
     </div>
-    <div class="arrow">&#9654;</div>
-  </a >
+    <h1>杰欣智能 · 产品视频演示</h1>
+    <p>杰欣智能科技有限公司</p >
+  </div>
 
-  <a class="card" href="https://mp.weixin.qq.com/s/rQycHmv09_OYHASusOEY6Q">
-    <div class="num">2</div>
-    <div class="info">
-      <div class="title">RFID 无障碍智能签到系统操作教程</div>
-      <div class="desc">公众号图文 · 含视频</div>
-    </div>
-    <div class="arrow">&#9654;</div>
-  </a >
+  <!-- ====== 视频列表 ====== -->
+  <div class="list" id="list">
 
-  <a class="card" href="https://mp.weixin.qq.com/s/Yt4ZmaWsVKbPok477MT3uA">
-    <div class="num">3</div>
-    <div class="info">
-      <div class="title">人脸识别设置教程</div>
-      <div class="desc">公众号图文 · 含视频</div>
-    </div>
-    <div class="arrow">&#9654;</div>
-  </a >
+    <!-- 视频① -->
+    <a class="card" href="https://mp.weixin.qq.com/s/mmr7sAjYSdbjFZzpD_UEMg">
+      <div class="num">1</div>
+      <div class="info">
+        <div class="title">810型通道机连接教程</div>
+        <div class="desc">公众号图文 · 含视频</div>
+      </div>
+      <div class="arrow">&#9654;</div>
+    </a >
 
-  <a class="card" href="https://mp.weixin.qq.com/s/XaG5fgh7gLpAckEqOEYEXg">
-    <div class="num">4</div>
-    <div class="info">
-      <div class="title">广告机无法连接签到系统设置</div>
-      <div class="desc">公众号图文 · 含视频</div>
-    </div>
-    <div class="arrow">&#9654;</div>
-  </a >
+    <!-- 视频② -->
+    <a class="card" href="https://mp.weixin.qq.com/s/rQycHmv09_OYHASusOEY6Q">
+      <div class="num">2</div>
+      <div class="info">
+        <div class="title">RFID 无障碍智能签到系统操作教程</div>
+        <div class="desc">公众号图文 · 含视频</div>
+      </div>
+      <div class="arrow">&#9654;</div>
+    </a >
 
-</div>
+    <!-- 视频③ -->
+    <a class="card" href="https://mp.weixin.qq.com/s/Yt4ZmaWsVKbPok477MT3uA">
+      <div class="num">3</div>
+      <div class="info">
+        <div class="title">人脸识别设置教程</div>
+        <div class="desc">公众号图文 · 含视频</div>
+      </div>
+      <div class="arrow">&#9654;</div>
+    </a >
 
-<div class="footer">
-  杰欣智能 · 成立于2014年
-</div>
+    <!-- 视频④ -->
+    <a class="card" href="https://mp.weixin.qq.com/s/XaG5fgh7gLpAckEqOEYEXg">
+      <div class="num">4</div>
+      <div class="info">
+        <div class="title">广告机无法连接签到系统设置</div>
+        <div class="desc">公众号图文 · 含视频</div>
+      </div>
+      <div class="arrow">&#9654;</div>
+    </a >
 
-</body>
-</html>
+    <!-- 添加新视频：复制上面整段 <a class="card">...</a >，改 href 和文字 -->
+
+  </div>
+
+  <!-- ====== 底部版权 ====== -->
+  <div class="footer">
+    杰欣智能 · 成立于2014年
+  </div>
+
+  <!-- ====== 下拉刷新 JS ====== -->
+  <script>
+    (function () {
+      var header       = document.getElementById('header');
+      var pullRefresh  = document.getElementById('pullRefresh');
+      var refreshText  = document.getElementById('refreshText');
+      var arrow        = document.getElementById('arrow');
+      var list         = document.getElementById('list
