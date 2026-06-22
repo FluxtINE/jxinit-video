@@ -14,10 +14,10 @@
       background: #f5f5f5;
       color: #333;
       min-height: 100vh;
-      -webkit-touch-callout: none;   /* 禁止长按菜单 */
-      -webkit-user-select: none;     /* 禁止选中文字 */
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
       user-select: none;
-      touch-action: manipulation;    /* 禁止双击缩放 */
+      touch-action: manipulation;
     }
 
     /* ====== 顶部标题栏 ====== */
@@ -26,37 +26,14 @@
       color: #fff;
       text-align: center;
       padding: 24px 16px 18px;
-      position: relative;
-      overflow: hidden;
     }
 
     .header h1 { font-size: 20px; margin-bottom: 4px; }
     .header p  { font-size: 13px; opacity: 0.85; }
 
-    /* 下拉刷新提示条 */
-    .pull-refresh {
-      position: absolute;
-      top: -40px; left: 0; right: 0;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      color: #fff;
-      opacity: 0.8;
-      transition: top 0.3s;
-    }
-    .pull-refresh.show { top: 0; }
-    .pull-refresh .arrow {
-      display: inline-block;
-      margin-right: 6px;
-      transition: transform 0.3s;
-    }
-    .pull-refresh .arrow.up { transform: rotate(180deg); }
-
     /* ====== 视频列表容器 ====== */
     .list {
-      padding: 12px 16px;
+      padding: 12px 16px 80px;   /* 底部留白，避免被按钮挡住 */
       max-width: 600px;
       margin: 0 auto;
     }
@@ -76,7 +53,6 @@
     }
     .card:active { background: #f0f0f0; }
 
-    /* 圆形序号 */
     .card .num {
       width: 32px; height: 32px;
       border-radius: 50%;
@@ -90,7 +66,6 @@
       margin-right: 12px;
     }
 
-    /* 标题与描述 */
     .card .info { flex: 1; min-width: 0; }
     .card .info .title {
       font-size: 15px;
@@ -105,7 +80,6 @@
       text-overflow: ellipsis;
     }
 
-    /* 右箭头 */
     .card .arrow {
       color: #bbb;
       font-size: 18px;
@@ -119,19 +93,43 @@
       font-size: 11px;
       color: #bbb;
     }
+
+    /* ====== 右下角刷新按钮 ====== */
+    .refresh-btn {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #1a73e8;
+      color: #fff;
+      font-size: 20px;
+      border: none;
+      box-shadow: 0 3px 10px rgba(26, 115, 232, 0.4);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .refresh-btn:active {
+      transform: scale(0.92);
+      box-shadow: 0 1px 4px rgba(26, 115, 232, 0.4);
+    }
+    /* 旋转动画 */
+    .refresh-btn.spinning { animation: spin 0.8s linear infinite; }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
   </style>
 </head>
 
 <body>
 
   <!-- ====== 顶部标题栏 ====== -->
-  <div class="header" id="header">
-    <div class="pull-refresh" id="pullRefresh">
-      <span class="arrow" id="arrow">↓</span>
-      <span id="refreshText">下拉刷新</span>
-    </div>
+  <div class="header">
     <h1>杰欣智能 · 产品视频演示</h1>
-    <p>杰欣智能科技有限公司</p >
+    <p>杰欣智能科技有限公司</p>
   </div>
 
   <!-- ====== 视频列表 ====== -->
@@ -145,7 +143,7 @@
         <div class="desc">公众号图文 · 含视频</div>
       </div>
       <div class="arrow">&#9654;</div>
-    </a >
+    </a>
 
     <!-- 视频② -->
     <a class="card" href="https://mp.weixin.qq.com/s/rQycHmv09_OYHASusOEY6Q">
@@ -155,7 +153,7 @@
         <div class="desc">公众号图文 · 含视频</div>
       </div>
       <div class="arrow">&#9654;</div>
-    </a >
+    </a>
 
     <!-- 视频③ -->
     <a class="card" href="https://mp.weixin.qq.com/s/Yt4ZmaWsVKbPok477MT3uA">
@@ -165,7 +163,7 @@
         <div class="desc">公众号图文 · 含视频</div>
       </div>
       <div class="arrow">&#9654;</div>
-    </a >
+    </a>
 
     <!-- 视频④ -->
     <a class="card" href="https://mp.weixin.qq.com/s/XaG5fgh7gLpAckEqOEYEXg">
@@ -175,9 +173,9 @@
         <div class="desc">公众号图文 · 含视频</div>
       </div>
       <div class="arrow">&#9654;</div>
-    </a >
+    </a>
 
-    <!-- 添加新视频：复制上面整段 <a class="card">...</a >，改 href 和文字 -->
+    <!-- 添加新视频：复制上面整段 <a class="card">...</a>，改 href 和文字 -->
 
   </div>
 
@@ -186,11 +184,16 @@
     杰欣智能 · 成立于2014年
   </div>
 
-  <!-- ====== 下拉刷新 JS ====== -->
+  <!-- ====== 右下角刷新按钮 ====== -->
+  <button class="refresh-btn" id="refreshBtn" title="刷新页面">↻</button>
+
   <script>
-    (function () {
-      var header       = document.getElementById('header');
-      var pullRefresh  = document.getElementById('pullRefresh');
-      var refreshText  = document.getElementById('refreshText');
-      var arrow        = document.getElementById('arrow');
-      var list         = document.getElementById('list
+    /* 刷新按钮：点击后旋转并重新加载 */
+    document.getElementById('refreshBtn').addEventListener('click', function () {
+      this.classList.add('spinning');
+      setTimeout(function () { location.reload(); }, 600);
+    });
+  </script>
+
+</body>
+</html>
