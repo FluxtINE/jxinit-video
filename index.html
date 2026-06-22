@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>杰欣智能 · 产品视频</title>
+  <title>RFID智能签到系统 · 快速操作指南</title>
   <style>
     /* ====== 全局重置 ====== */
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -128,7 +128,7 @@
 
   <!-- ====== 顶部标题栏 ====== -->
   <div class="header">
-    <h1>杰欣智能 · 产品视频演示</h1>
+    <h1>RFID智能签到系统 · 快速操作指南</h1>
     <p>杰欣智能科技有限公司</p>
   </div>
 
@@ -193,18 +193,7 @@
   </div>
 
   <!-- ====== 右下角刷新按钮 ====== -->
-  <button class="refresh-btn" id="refreshBtn" title="刷新页面">↻</button>
-
-  <script>
-    /* 刷新按钮：加时间戳强制从服务器重新加载 */
-    document.getElementById('refreshBtn').addEventListener('click', function () {
-      this.classList.add('spinning');
-      setTimeout(function () {
-        var url = window.location.href.split('?')[0];
-        window.location.href = url + '?t=' + new Date().getTime();
-      }, 600);
-    });
-  </script>
+  <button class="refresh-btn" onclick="location.replace(location.href.split('?')[0]+'?t='+Date.now())" title="刷新页面">↻</button>
 
 </body>
 </html>
